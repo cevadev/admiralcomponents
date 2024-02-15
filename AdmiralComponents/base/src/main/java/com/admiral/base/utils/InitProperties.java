@@ -19,7 +19,7 @@ public final class InitProperties implements Serializable {
     public static final String	ADMIRAL_PROPERTY_FILE = "admiral.properties";
 
     /* Connection deatils*/
-    private static final String AD_CONNECTION = "Connection";
+    public static final String AD_CONNECTION = "Connection";
     private static final String DEFAULT_CONNECTION = "";
 
     /* Init properties */
@@ -105,4 +105,10 @@ public final class InitProperties implements Serializable {
             loadProperties(getFileName(ad_client));
         }
     }	//	loadProperties
+
+    public static Properties getProperties(){
+        return ad_prop;
+    }
+
+    public static String getProperty (String key){}
 }
