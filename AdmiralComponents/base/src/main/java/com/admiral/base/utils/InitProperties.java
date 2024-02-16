@@ -110,5 +110,9 @@ public final class InitProperties implements Serializable {
         return ad_prop;
     }
 
-    public static String getProperty (String key){}
+    public static String getProperty (String key){
+        if(key == null)
+            return "";
+        return ad_prop.getProperty(key, "");
+    }
 }
