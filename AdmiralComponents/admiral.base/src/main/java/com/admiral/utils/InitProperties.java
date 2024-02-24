@@ -1,6 +1,5 @@
-package com.admiral.base.utils;
+package com.admiral.utils;
 
-import com.admiral.base.db.Database_PostgreSQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

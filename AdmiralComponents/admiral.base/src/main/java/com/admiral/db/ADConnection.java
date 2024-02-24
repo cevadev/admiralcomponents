@@ -1,6 +1,6 @@
-package com.admiral.base.db;
+package com.admiral.db;
 
-import com.admiral.base.utils.InitProperties;
+import com.admiral.utils.InitProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +12,7 @@ public class ADConnection implements Serializable, Cloneable {
     private volatile static ADConnection s_cc = null;
 
     private String m_name = "Standard";
-    private String m_app_host = "localhost";
+    private String m_apps_host = "localhost";
     private String m_db_host = "localhost";
     private String m_type = "";
     private int m_db_port = 0;
@@ -33,11 +33,11 @@ public class ADConnection implements Serializable, Cloneable {
     public void setName(String name){
         this.m_name = name;
     }
-    public String getAppHost(){
-        return m_app_host;
+    public String getAppsHost(){
+        return m_apps_host;
     }
-    public void setAppHost(String appHost){
-        this.m_app_host = appHost;
+    public void setAppsHost(String appHost){
+        this.m_apps_host = appHost;
     }
     public String getDbHost(){
         return m_db_host;
@@ -54,8 +54,20 @@ public class ADConnection implements Serializable, Cloneable {
     public int getDbPort(){
         return this.m_db_port;
     }
-    public void setDbPort(int dbPort){
-        this.m_db_port = dbPort;
+
+    public void setDbPort(int db_port){
+        m_db_port = db_port;
+    }
+    public void setDbPort(String dbPort){
+        try{
+            if(dbPort == null || dbPort.isEmpty()){
+                ;
+            }else{
+                setDbPort(Integer.parseInt(dbPort));
+            }
+        }catch(Exception ex){
+            logger.error(ex.toString());
+        }
     }
     public String getDbName(){
         return this.m_db_name;
@@ -80,7 +92,38 @@ public class ADConnection implements Serializable, Cloneable {
      * appsHost,type,DBHost,DBPort,DBName,UID,PWD
      */
     private void setAttributes(String attributes){
-        TODOHERE;
+        try{
+            attributes = attributes.substring(attributes.indexOf("[") + 1, attributes.length());
+            String[] pairs = attributes.split(",");
+            for(String pair : pairs){
+                String[] pairComponents = pair.split("=");
+                String key = pairComponents[0];
+                String value = pairComponents.length == 2 ? pairComponents[1] : "";
+                if("name".equalsIgnoreCase(key)){
+                    setName(value);
+                }
+                else if("AppsHost".equalsIgnoreCase(key)){
+                    setAppsHost(value);
+                }
+                else if("type".equalsIgnoreCase(key)){
+                    setType(value);
+                }
+                else if("DBhost".equalsIgnoreCase(key)){
+                    setDbHost(value);
+                }
+                else if("DBport".equalsIgnoreCase(key)){
+                    setDbPort(value);
+                }else if("DBname".equalsIgnoreCase(key)){
+                    setDbName(value);
+                }else if("UID".equalsIgnoreCase(key)){
+                    setDbUid(value);
+                }else if("PWD".equalsIgnoreCase(key)){
+                    setDbPwd(value);
+                }
+            }
+        }catch (Exception ex){
+            logger.error(attributes + " - " + ex.toString());
+        }
     }
 
     public synchronized static ADConnection get(){

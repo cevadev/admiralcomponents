@@ -1,4 +1,4 @@
-package com.admiral.base.db;
+package com.admiral.db;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;

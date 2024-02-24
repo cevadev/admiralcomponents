@@ -1,4 +1,4 @@
-package com.admiral.base.db;
+package com.admiral.db;
 
 public interface AdmiralDatabase {
 }

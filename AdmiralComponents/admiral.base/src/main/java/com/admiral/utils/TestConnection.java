@@ -1,6 +1,6 @@
-package com.admiral.base.utils;
+package com.admiral.utils;
 
-import com.admiral.base.db.ADConnection;
+import com.admiral.db.ADConnection;
 
 import java.util.Properties;
 
@@ -11,5 +11,10 @@ public class TestConnection {
         Properties properties = InitProperties.getProperties();
 
         Database.setDatabaseTarget(ADConnection.get());
+
+    }
+
+    public static void main(String[] args) {
+        startup(true);
     }
 }
